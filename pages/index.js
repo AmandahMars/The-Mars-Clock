@@ -44,24 +44,22 @@ export default function Home() {
         time: bstTime
       });
 
-      // ===== MARS DATA (MOD 687) =====
-      const epochDate = new Date(2021, 1, 7);
-      const totalDays = Math.floor((now - epochDate) / (1000 * 60 * 60 * 24));
+      // ===== MARS DATA (MOD 687) ===== 
+const epochDate = new Date(2021, 1, 7);
+const totalDays = Math.floor((now - epochDate) / (1000 * 60 * 60 * 24));
 
-      const daysInMarsYear = totalDays % 687;
-      const marsCompleteMonths = Math.floor(daysInMarsYear / 57.25);
-      const marsDaysUsed = marsCompleteMonths * 57.25;
-      const marsRemainingDays = daysInMarsYear - marsDaysUsed;
+const marsDay = totalDays % 687;
+const marsMonth = Math.floor(marsDay / 57.25) + 1;
+const marsRemainingDays = marsDay % 57.25;
+const marsDateFormatted = `${String(marsMonth).padStart(2, '0')}.${String(Math.floor(marsRemainingDays)).padStart(2, '0')}`;
 
-      const marsMonth = marsRemainingDays === 0 ? marsCompleteMonths : marsCompleteMonths + 1;
-      const marsDay = marsRemainingDays === 0 ? 57 : Math.floor(marsRemainingDays);
-      const marsDateFormatted = `${String(marsMonth).padStart(2, '0')}.${String(marsDay).padStart(2, '0')}`;
+setMarsData({
+  day: marsDay,
+  date: marsDateFormatted,
+  time: bstTime
+});
 
-      setMarsData({
-        day: marsDay,
-        date: marsDateFormatted,
-        time: bstTime
-      });
+
 
       // ===== SOL DATA (MOD 668) + NASA24 AIRY TIME =====
       const daysInSolYear = totalDays % 668;
