@@ -79,7 +79,7 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Mars Day Card */}
+            {/* Mars Day Card - NO DESCRIPTION */}
             <div className="bg-slate-800/50 border-2 border-amber-600 rounded-2xl p-6">
               <h3 className="text-amber-600 text-sm font-bold tracking-wider mb-2">MARS DAY</h3>
               
@@ -94,19 +94,15 @@ export default function Home() {
                 </div>
               </div>
               
-              <div className="mb-4">
+              <div>
                 <p className="text-gray-400 text-xs uppercase tracking-wider mb-2">Time</p>
                 <p className="text-yellow-300 text-xl font-bold font-mono">
                   {String(time.mars.hours).padStart(2, '0')}:{String(time.mars.minutes).padStart(2, '0')}
                 </p>
               </div>
-              
-              <p className="text-gray-400 text-xs leading-relaxed">
-                Day count and date within the 687-day Mars year, using Amanda Yahsarael's calendar system.
-              </p>
             </div>
 
-            {/* Mars Sol Card */}
+            {/* Mars Sol Card - CLEAN */}
             <div className="bg-slate-800/50 border-2 border-amber-600 rounded-2xl p-6">
               <h3 className="text-amber-600 text-sm font-bold tracking-wider mb-2">MARS SOL</h3>
               
@@ -121,7 +117,7 @@ export default function Home() {
                 </div>
               </div>
               
-              <div className="mb-4">
+              <div>
                 <p className="text-gray-400 text-xs uppercase tracking-wider mb-2">MTC / AIRY-0</p>
                 <p className="text-yellow-300 text-xl font-bold font-mono">
                   {String(time.sol.hours).padStart(2, '0')}:{String(time.sol.minutes).padStart(2, '0')}:{String(time.sol.seconds).padStart(2, '0')}
@@ -151,7 +147,7 @@ export default function Home() {
               <p className="text-gray-400 text-xs">{time.earth.dateString}</p>
             </div>
 
-            {/* Mars Day Card */}
+            {/* Mars Day Card - NO DESCRIPTION */}
             <div className="bg-slate-800/50 border-2 border-amber-600 rounded-2xl p-4">
               <h3 className="text-amber-600 text-sm font-bold tracking-wider mb-3">MARS DAY</h3>
               <div className="grid grid-cols-2 gap-3 mb-3">
@@ -164,18 +160,15 @@ export default function Home() {
                   <p className="text-yellow-300 text-2xl font-bold">{time.mars.dateFormatted}</p>
                 </div>
               </div>
-              <div className="mb-3">
+              <div>
                 <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">Time</p>
                 <p className="text-yellow-300 text-lg font-bold font-mono">
                   {String(time.mars.hours).padStart(2, '0')}:{String(time.mars.minutes).padStart(2, '0')}
                 </p>
               </div>
-              <p className="text-gray-400 text-xs leading-relaxed">
-                Day count and date within the 687-day Mars year, using Amanda Yahsarael's calendar system.
-              </p>
             </div>
 
-            {/* Mars Sol Card */}
+            {/* Mars Sol Card - CLEAN */}
             <div className="bg-slate-800/50 border-2 border-amber-600 rounded-2xl p-4">
               <h3 className="text-amber-600 text-sm font-bold tracking-wider mb-3">MARS SOL</h3>
               <div className="grid grid-cols-2 gap-3 mb-3">
