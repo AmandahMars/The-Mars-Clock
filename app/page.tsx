@@ -1,157 +1,218 @@
-"use client"
+'use client';
 
-import { useEffect, useState } from "react"
-import { getMarsClockData, MarsClockData } from "../lib/mars"
+import { useEffect, useState } from 'react';
+import { calculateMarsTime } from '@/lib/mars';
 
-function formatEarthDate(date: Date): string {
-  return new Intl.DateTimeFormat("en-GB", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(date)
-}
-
-export default function HomePage() {
-  const [now, setNow] = useState<Date | null>(null)
-  const [clock, setClock] = useState<MarsClockData | null>(null)
+export default function Home() {
+  const [time, setTime] = useState<any>(null);
+  const [isLive, setIsLive] = useState(true);
 
   useEffect(() => {
-    const updateClock = () => {
-      const current = new Date()
-      setNow(current)
-      setClock(getMarsClockData(current))
-    }
+    const updateTime = () => {
+      const mars = calculateMarsTime();
+      setTime(mars);
+    };
 
-    updateClock()
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
-    const interval = window.setInterval(updateClock, 1000)
-
-    return () => window.clearInterval(interval)
-  }, [])
-
-  if (!now || !clock) {
+  if (!time) {
     return (
-      <main className="page">
-        <div className="loading">Loading The Mars Clock…</div>
-      </main>
-    )
+      <div className="min-h-screen bg-gradient-to-b from-slate-900 via-blue-900 to-slate-800 flex items-center justify-center">
+        <p className="text-white text-lg">Loading Mars Clock...</p>
+      </div>
+    );
   }
 
   return (
-    <main className="page">
-      {/* HERO SECTION */}
-      <section className="hero">
-        <p className="eyebrow">TRACKING TIME ON TWO WORLDS</p>
-        <h1>
-          THE MARS
-          <span>CLOCK</span>
-        </h1>
-        <div className="live">
-          <span className="live-dot" />
-          LIVE
-        </div>
-      </section>
-
-      {/* CLOCK PANEL */}
-      <section className="clock-panel">
-        <div className="panel-heading">
-          <div>
-            <p className="section-label">CURRENT READOUT</p>
-            <h2>Earth and Mars time</h2>
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-blue-900 to-slate-800 px-4 py-8 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-yellow-300 mb-2">
+            THE MARS CLOCK
+          </h1>
+          <p className="text-cyan-300 text-lg sm:text-xl tracking-widest mb-2">
+            TRACKING TIME ON TWO WORLDS
+          </p>
+          
+          {/* Live Indicator */}
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <div className={`w-3 h-3 rounded-full ${isLive ? 'bg-green-400 animate-pulse' : 'bg-gray-500'}`}></div>
+            <span className="text-green-400 uppercase text-sm font-semibold tracking-wider">
+              LIVE
+            </span>
           </div>
-          <p className="updated">Updated every second</p>
+          
+          <p className="text-gray-400 text-sm">Updated every second</p>
         </div>
 
-        <div className="cards">
-          {/* EARTH CARD */}
-          <article className="card earth-card">
-            <p className="card-label">EARTH</p>
-            <p className="date-large">{formatEarthDate(now)}</p>
-
-            <div className="data-grid">
-              <div>
-                <span>DAY OF YEAR</span>
-                <strong>{clock.earthDayOfYear}</strong>
+        {/* Current Readout Section */}
+        <div className="mb-12">
+          <h2 className="text-amber-600 text-lg sm:text-xl font-bold mb-6 text-center">
+            CURRENT READOUT
+          </h2>
+          
+          {/* Desktop: 3-column layout */}
+          <div className="hidden md:grid grid-cols-3 gap-6 mb-8">
+            {/* Earth Card */}
+            <div className="bg-slate-800/50 border-2 border-amber-600 rounded-2xl p-6">
+              <h3 className="text-amber-600 text-sm font-bold tracking-wider mb-4">EARTH</h3>
+              
+              <div className="mb-6">
+                <p className="text-gray-400 text-xs uppercase tracking-wider mb-2">Day of Year</p>
+                <p className="text-yellow-300 text-3xl font-bold">{time.earth.dayOfYear}</p>
               </div>
-
+              
               <div>
-                <span>TIME</span>
-                <strong>{clock.earthTime}</strong>
-                <small>{clock.earthTimeZone}</small>
+                <p className="text-gray-400 text-xs uppercase tracking-wider mb-2">Time</p>
+                <p className="text-yellow-300 text-2xl font-bold font-mono">
+                  {String(time.earth.hours).padStart(2, '0')}:{String(time.earth.minutes).padStart(2, '0')}:{String(time.earth.seconds).padStart(2, '0')}
+                </p>
+                <p className="text-gray-500 text-xs mt-2">BST</p>
               </div>
-            </div>
-          </article>
-
-          {/* MARS DAY CARD (Earth Framework) */}
-          <article className="card mars-day-card">
-            <p className="card-label">MARS DAY</p>
-
-            <div className="data-grid">
-              <div>
-                <span>DAY</span>
-                <strong>{clock.marsDayCount}</strong>
-              </div>
-
-              <div>
-                <span>MARS DATE</span>
-                <strong>{clock.marsDateEarth}</strong>
-              </div>
+              
+              <p className="text-gray-400 text-xs mt-4 leading-relaxed">
+                {time.earth.dateString}
+              </p>
             </div>
 
-            <p className="note">
-              Day count and date within the 687-day Mars year, using Amanda
-              Yahsarael's calendar system.
-            </p>
-          </article>
-
-          {/* MARS SOL CARD (Sol Framework + NASA Mars24 Time) */}
-          <article className="card mars-sol-card">
-            <p className="card-label">MARS SOL</p>
-
-            <div className="data-grid">
-              <div>
-                <span>SOL</span>
-                <strong>{clock.marsSolDay}</strong>
+            {/* Mars Day Card */}
+            <div className="bg-slate-800/50 border-2 border-amber-600 rounded-2xl p-6">
+              <h3 className="text-amber-600 text-sm font-bold tracking-wider mb-2">MARS DAY</h3>
+              
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <div>
+                  <p className="text-gray-400 text-xs uppercase tracking-wider mb-2">Day</p>
+                  <p className="text-yellow-300 text-2xl font-bold">{time.mars.day}</p>
+                </div>
+                <div>
+                  <p className="text-gray-400 text-xs uppercase tracking-wider mb-2">Mars Date</p>
+                  <p className="text-yellow-300 text-2xl font-bold">{time.mars.dateFormatted}</p>
+                </div>
               </div>
-
-              <div>
-                <span>MARS DATE</span>
-                <strong>{clock.marsDateSol}</strong>
+              
+              <div className="mb-4">
+                <p className="text-gray-400 text-xs uppercase tracking-wider mb-2">Time</p>
+                <p className="text-yellow-300 text-xl font-bold font-mono">
+                  {String(time.mars.hours).padStart(2, '0')}:{String(time.mars.minutes).padStart(2, '0')}
+                </p>
               </div>
+              
+              <p className="text-gray-400 text-xs leading-relaxed">
+                Day count and date within the 687-day Mars year, using Amanda Yahsarael's calendar system.
+              </p>
             </div>
 
-            <div className="solar-time">
-              <span>{clock.marsTime}</span>
-              <small>MTC / AIRY-0</small>
+            {/* Mars Sol Card */}
+            <div className="bg-slate-800/50 border-2 border-amber-600 rounded-2xl p-6">
+              <h3 className="text-amber-600 text-sm font-bold tracking-wider mb-2">MARS SOL</h3>
+              
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <div>
+                  <p className="text-gray-400 text-xs uppercase tracking-wider mb-2">Sol</p>
+                  <p className="text-yellow-300 text-2xl font-bold">{time.sol.day}</p>
+                </div>
+                <div>
+                  <p className="text-gray-400 text-xs uppercase tracking-wider mb-2">Mars Date</p>
+                  <p className="text-yellow-300 text-2xl font-bold">{time.sol.dateFormatted}</p>
+                </div>
+              </div>
+              
+              <div className="mb-4">
+                <p className="text-gray-400 text-xs uppercase tracking-wider mb-2">MTC / AIRY-0</p>
+                <p className="text-yellow-300 text-xl font-bold font-mono">
+                  {String(time.sol.hours).padStart(2, '0')}:{String(time.sol.minutes).padStart(2, '0')}:{String(time.sol.seconds).padStart(2, '0')}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile: Stacked layout */}
+          <div className="md:hidden space-y-4">
+            {/* Earth Card */}
+            <div className="bg-slate-800/50 border-2 border-amber-600 rounded-2xl p-4">
+              <h3 className="text-amber-600 text-sm font-bold tracking-wider mb-3">EARTH</h3>
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">Day of Year</p>
+                  <p className="text-yellow-300 text-2xl font-bold">{time.earth.dayOfYear}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">Time</p>
+                  <p className="text-yellow-300 text-lg font-bold font-mono">
+                    {String(time.earth.hours).padStart(2, '0')}:{String(time.earth.minutes).padStart(2, '0')}:{String(time.earth.seconds).padStart(2, '0')}
+                  </p>
+                </div>
+              </div>
+              <p className="text-gray-500 text-xs mb-2">BST</p>
+              <p className="text-gray-400 text-xs">{time.earth.dateString}</p>
             </div>
 
-            <p className="note">
-              Sol day and date within the 668-day Mars year, using Amanda
-              Yahsarael's calendar system. MTC (Coordinated Mars Time)
-              calculated using the NASA Mars24 Airy-0 method.
-            </p>
-          </article>
+            {/* Mars Day Card */}
+            <div className="bg-slate-800/50 border-2 border-amber-600 rounded-2xl p-4">
+              <h3 className="text-amber-600 text-sm font-bold tracking-wider mb-3">MARS DAY</h3>
+              <div className="grid grid-cols-2 gap-3 mb-3">
+                <div>
+                  <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">Day</p>
+                  <p className="text-yellow-300 text-2xl font-bold">{time.mars.day}</p>
+                </div>
+                <div>
+                  <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">Mars Date</p>
+                  <p className="text-yellow-300 text-2xl font-bold">{time.mars.dateFormatted}</p>
+                </div>
+              </div>
+              <div className="mb-3">
+                <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">Time</p>
+                <p className="text-yellow-300 text-lg font-bold font-mono">
+                  {String(time.mars.hours).padStart(2, '0')}:{String(time.mars.minutes).padStart(2, '0')}
+                </p>
+              </div>
+              <p className="text-gray-400 text-xs leading-relaxed">
+                Day count and date within the 687-day Mars year, using Amanda Yahsarael's calendar system.
+              </p>
+            </div>
+
+            {/* Mars Sol Card */}
+            <div className="bg-slate-800/50 border-2 border-amber-600 rounded-2xl p-4">
+              <h3 className="text-amber-600 text-sm font-bold tracking-wider mb-3">MARS SOL</h3>
+              <div className="grid grid-cols-2 gap-3 mb-3">
+                <div>
+                  <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">Sol</p>
+                  <p className="text-yellow-300 text-2xl font-bold">{time.sol.day}</p>
+                </div>
+                <div>
+                  <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">Mars Date</p>
+                  <p className="text-yellow-300 text-2xl font-bold">{time.sol.dateFormatted}</p>
+                </div>
+              </div>
+              <div>
+                <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">MTC / AIRY-0</p>
+                <p className="text-yellow-300 text-lg font-bold font-mono">
+                  {String(time.sol.hours).padStart(2, '0')}:{String(time.sol.minutes).padStart(2, '0')}:{String(time.sol.seconds).padStart(2, '0')}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
 
-      {/* FOOTER */}
-      <footer className="footer">
-        <p>
-          <strong>The Mars Clock:</strong>
-          Mars day, Mars date, sol and sol date follow
-          Amanda Yahsarael's calendar system.
-        </p>
-
-        <p>
-          <strong>Mars solar time:</strong>
-          MTC calculated using the NASA Mars24 Airy-0 method.
-        </p>
-
-        <p>
-          NASA Mars24 is acknowledged for the solar-time calculation method only.
-        </p>
-      </footer>
-    </main>
-  )
+        {/* Footer */}
+        <footer className="border-t border-amber-600/30 pt-8 mt-12 text-center space-y-2">
+          <p className="text-amber-600">
+            <span className="font-bold">The Mars Clock:</span>
+            <span className="text-cyan-300"> Mars day, Mars date, sol and sol date follow Amanda Yahsarael's calendar system.</span>
+          </p>
+          <p className="text-amber-600">
+            <span className="font-bold">Mars solar time:</span>
+            <span className="text-cyan-300"> MTC calculated using the NASA Mars24 Airy-0 method.</span>
+          </p>
+          <p className="text-gray-400 text-sm">
+            NASA Mars24 is acknowledged for the solar-time calculation method only.
+          </p>
+        </footer>
+      </div>
+    </div>
+  );
 }
