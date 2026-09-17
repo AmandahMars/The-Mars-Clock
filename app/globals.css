@@ -1,0 +1,424 @@
+/* ========================================================================== */
+/* THE MARS CLOCK - GLOBAL STYLES                                           */
+/* Vercel Production Deployment                                             */
+/* © 2026 Amanda Murrain / Amandah Yahsarael                                */
+/* ========================================================================== */
+
+:root {
+  --navy: #101a2a;
+  --navy-light: #18263a;
+  --panel: #38291f;
+  --panel-light: #493428;
+  --gold: #d9ae2d;
+  --gold-bright: #f3b21b;
+  --orange: #f27b32;
+  --orange-bright: #ffa500;
+  --muted: #a7a9af;
+  --blue-muted: #7895b8;
+  --line: rgba(217, 174, 45, 0.28);
+  --white: #f5f2ea;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--navy);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--white);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+    Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  background: radial-gradient(circle at 50% 0%, rgba(53, 82, 113, 0.22), transparent 36rem),
+    linear-gradient(145deg, #0e1725, #162337 50%, #0d1624);
+  min-height: 100vh;
+}
+
+/* ========================================================================== */
+/* PAGE LAYOUT                                                               */
+/* ========================================================================== */
+
+.page {
+  min-height: 100vh;
+  padding: 3rem 1.25rem 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ========================================================================== */
+/* HERO SECTION                                                              */
+/* ========================================================================== */
+
+.hero {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto 2.5rem;
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 2.25rem;
+  color: var(--blue-muted);
+  font-size: clamp(0.75rem, 1.4vw, 1.2rem);
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  color: var(--gold);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  line-height: 0.87;
+  letter-spacing: 0.04em;
+  text-shadow: 0 5px 20px rgba(0, 0, 0, 0.28);
+  word-break: break-word;
+}
+
+h1 span {
+  display: block;
+  margin-top: 1.2rem;
+}
+
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 2rem;
+  color: #8ee0a2;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.live-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: #58db78;
+  box-shadow: 0 0 12px #58db78;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 12px #58db78;
+  }
+  50% {
+    box-shadow: 0 0 24px #58db78;
+  }
+}
+
+/* ========================================================================== */
+/* CLOCK PANEL                                                               */
+/* ========================================================================== */
+
+.clock-panel {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: clamp(1.25rem, 4vw, 3.5rem);
+  border: 1px solid var(--line);
+  border-radius: 2rem;
+  background: linear-gradient(135deg, rgba(73, 52, 40, 0.96), rgba(48, 35, 28, 0.98));
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+}
+
+.panel-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.7rem;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+.panel-heading > div:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.section-label,
+.card-label {
+  margin: 0;
+  color: var(--orange);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.panel-heading h2 {
+  margin: 0.45rem 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.5rem, 3vw, 2.35rem);
+  color: var(--white);
+}
+
+.updated {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+/* ========================================================================== */
+/* CARDS GRID                                                                */
+/* ========================================================================== */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+.card {
+  min-height: 300px;
+  padding: 1.4rem;
+  border: 1px solid rgba(217, 174, 45, 0.2);
+  border-radius: 1.25rem;
+  background: rgba(19, 25, 32, 0.22);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.earth-card {
+  border-top: 3px solid var(--gold);
+}
+
+.mars-day-card {
+  border-top: 3px solid var(--orange);
+}
+
+.mars-sol-card {
+  border-top: 3px solid #e99528;
+}
+
+.card-label {
+  margin: 0;
+}
+
+.date-large {
+  margin: 1.6rem 0;
+  color: var(--white);
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* ========================================================================== */
+/* DATA GRID & VALUES                                                        */
+/* ========================================================================== */
+
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.4rem 1rem;
+  margin-top: 1rem;
+}
+
+.data-grid.single {
+  grid-template-columns: 1fr;
+}
+
+.data-grid span {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.data-grid strong {
+  display: block;
+  color: var(--gold-bright);
+  font-family: "Courier New", Courier, monospace;
+  font-size: clamp(1.65rem, 3vw, 2.6rem);
+  line-height: 1;
+  font-weight: 700;
+}
+
+.data-grid small {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+
+.solar-time {
+  margin: 2.2rem 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.solar-time span {
+  display: block;
+  color: var(--gold-bright);
+  font-family: "Courier New", Courier, monospace;
+  font-size: clamp(2.3rem, 4vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.08em;
+  line-height: 1;
+}
+
+.solar-time small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.note {
+  margin: 2rem 0 0;
+  color: #c6bbb3;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+/* ========================================================================== */
+/* FOOTER                                                                    */
+/* ========================================================================== */
+
+.footer {
+  max-width: 1100px;
+  margin: 2rem auto 0;
+  padding: 2rem 0 0;
+  color: var(--blue-muted);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  text-align: center;
+  border-top: 1px solid var(--line);
+}
+
+.footer p {
+  margin: 0.5rem 0;
+}
+
+.footer strong {
+  color: var(--orange);
+}
+
+/* ========================================================================== */
+/* LOADING STATE                                                             */
+/* ========================================================================== */
+
+.loading {
+  display: grid;
+  min-height: 90vh;
+  place-items: center;
+  color: var(--gold);
+  font-size: 1.2rem;
+}
+
+/* ========================================================================== */
+/* RESPONSIVE: TABLET                                                        */
+/* ========================================================================== */
+
+@media (max-width: 850px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    min-height: auto;
+  }
+}
+
+/* ========================================================================== */
+/* RESPONSIVE: MOBILE                                                        */
+/* ========================================================================== */
+
+@media (max-width: 640px) {
+  .page {
+    padding: 2rem 0.75rem;
+  }
+
+  .eyebrow {
+    letter-spacing: 0.18em;
+  }
+
+  .panel-heading {
+    display: block;
+  }
+
+  .updated {
+    margin-top: 0.8rem;
+  }
+
+  .clock-panel {
+    border-radius: 1.2rem;
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1.2rem;
+  }
+
+  .data-grid strong {
+    font-size: 1.55rem;
+  }
+
+  .solar-time span {
+    font-size: 2.35rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero {
+    margin-bottom: 1.5rem;
+  }
+
+  .cards {
+    gap: 0.75rem;
+  }
+
+  .clock-panel {
+    margin: 0 0.75rem;
+  }
+}
+
+/* ========================================================================== */
+/* ACCESSIBILITY                                                             */
+/* ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    background: #f5f2ea;
+    color: var(--navy);
+  }
+
+  .panel-heading {
+    border-bottom-color: var(--navy);
+  }
+
+  .card {
+    background: rgba(217, 174, 45, 0.08);
+    border-color: rgba(217, 174, 45, 0.3);
+  }
+}
