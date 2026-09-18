@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { calculateMarsTime } from '@/lib/mars';
+import { getMarsClockData } from '@/lib/mars';
 
 export default function Home() {
   const [time, setTime] = useState<any>(null);
@@ -9,7 +9,7 @@ export default function Home() {
 
   useEffect(() => {
     const updateTime = () => {
-      const mars = calculateMarsTime();
+      const mars = getMarsClockData(new Date());
       setTime(mars);
     };
 
