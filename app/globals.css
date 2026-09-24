@@ -1,0 +1,111 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at top, #2e2a28 0%, #1c1917 70%);
+  color: #f5efe6;
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+}
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(24px, 5vw, 64px) clamp(16px, 4vw, 48px);
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.eyebrow,
+.card-title,
+.label {
+  margin: 0;
+  font-family: "Arial Black", "Segoe UI Black", Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.eyebrow { color: #f07a2a; font-size: 0.85rem; }
+
+h1 {
+  margin: 12px 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.1;
+}
+
+.updated { margin: 0; color: #cfc6ba; font-size: 0.95rem; }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.card {
+  min-width: 0;
+  padding: 28px 24px 32px;
+  border-radius: 18px;
+  border-top: 4px solid #f5b400;
+  background: linear-gradient(180deg, #3a3634 0%, #57534f 100%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.card-title { color: #f39a2b; font-size: 1rem; }
+
+.earth-date {
+  margin: 28px 0 0;
+  font-family: "Segoe UI", system-ui, Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  line-height: 1.25;
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.label { color: #e8e1d6; font-size: 0.72rem; }
+
+.value {
+  margin: 8px 0 0;
+  font-family: "Courier New", Courier, ui-monospace, monospace;
+  font-weight: 700;
+  color: #ffd93d;
+  font-size: clamp(1.4rem, 2.3vw, 2.2rem);
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.value.big {
+  margin: 36px 0 10px;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+}
+
+.zone { margin: 8px 0 0; color: #cfc6ba; font-size: 0.8rem; }
+
+.credit {
+  margin-top: 40px;
+  color: #a8a097;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .cards { grid-template-columns: 1fr; }
+  .value { font-size: clamp(1.6rem, 8vw, 2.6rem); }
+}
