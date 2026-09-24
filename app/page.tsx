@@ -127,7 +127,13 @@ export default function Home() {
           <p className="eyebrow">Current readout</p>
           <h1>Earth and Mars time</h1>
         </div>
-        <p className="updated">Updated every second</p>
+        <p className="updated">
+          <span className="live">
+            <span className="live-dot" aria-hidden="true" />
+            Live
+          </span>
+          Updated every second
+        </p>
       </header>
 
       <section className="cards">
